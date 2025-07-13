@@ -31,7 +31,7 @@ def make_request(endpoint: str) -> str:
 def get_species_code(common_name: str) -> str:
     """Get the species code for a given common name."""
     for item in taxonomy_data:
-        if item["COMMON_NAME"].lower() == common_name.lower():
+        if item["comName"].lower() == common_name.lower():
             return item["SPECIES_CODE"]
     return None
 
