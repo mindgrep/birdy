@@ -32,7 +32,7 @@ def get_species_code(common_name: str) -> str:
     """Get the species code for a given common name."""
     for item in taxonomy_data:
         if item["comName"].lower() == common_name.lower():
-            return item["SPECIES_CODE"]
+            return item["speciesCode"]
     return None
 
 
