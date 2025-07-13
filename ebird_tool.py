@@ -44,12 +44,22 @@ def get_species_code(common_name: str) -> str:
 def get_sightings(speciesCode: str, regionCode: str) -> str:
     print(f"get_sightings called with params {speciesCode} and {regionCode}")
     records = make_request(f"data/obs/{regionCode}/recent/{speciesCode}")
+
+    # Ensure records is a list of dictionaries
+    if not isinstance(records, list):
+        if isinstance(records, dict):
+            records = [records]
+        else:
+            # If it's neither a list nor a dict (e.g., a string error message), return empty
+            print(f"Warning: Unexpected response from eBird API: {records}")
+            return json.dumps([])
+
     # Optimize the output to reduce token usage
     optimized_records = [
         {
-            "locId": r["locId"],
-            "locName": r["locName"],
-            "obsDt": r["obsDt"],
+            "locId": r.get("locId"),
+            "locName": r.get("locName"),
+            "obsDt": r.get("obsDt"),
             "howMany": r.get("howMany", "N/A"),
         }
         for r in records
