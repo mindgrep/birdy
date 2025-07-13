@@ -8,6 +8,10 @@ import json
 baseUrl = "https://api.ebird.org/v2"
 apiToken = os.environ["EBIRD_API_TOKEN"]
 
+# Load the taxonomy data
+with open("ebird_json/taxonomy.json", "r") as f:
+    taxonomy_data = json.load(f)
+
 
 def make_request(endpoint: str) -> str:
     url = f"{baseUrl}/{endpoint}"
@@ -17,6 +21,19 @@ def make_request(endpoint: str) -> str:
     )
     pprint(f"Query: {url}, response: {resp.json()}")
     return resp.json()
+
+
+@tool(
+    show_result=False,
+    stop_after_tool_call=False,
+    description="Get the species code for a given common name.",
+)
+def get_species_code(common_name: str) -> str:
+    """Get the species code for a given common name."""
+    for item in taxonomy_data:
+        if item["COMMON_NAME"].lower() == common_name.lower():
+            return item["SPECIES_CODE"]
+    return None
 
 
 @tool(

@@ -5,7 +5,7 @@ from agno.storage.sqlite import SqliteStorage
 from agno.memory.v2.memory import Memory
 from agno.memory.v2.db.sqlite import SqliteMemoryDb
 from knowledge_base import KnowledgeWorkerThread
-from ebird_tool import get_sightings, get_region_codes
+from ebird_tool import get_sightings, get_region_codes, get_species_code
 from textwrap import dedent
 import uuid
 
@@ -62,7 +62,7 @@ if knowledge_base:
         Summarize the results in a readable format.
         """
         ),
-        tools=[get_sightings, get_region_codes],
+        tools=[get_sightings, get_region_codes, get_species_code],
         storage=storage,
         read_tool_call_history=True,
         search_knowledge=True,
