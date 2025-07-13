@@ -32,7 +32,6 @@ memory = Memory(
     db=memory_db,
     delete_memories=False,
     clear_memories=False,
-    summarize=True,  # Enable summarization
 )
 storage = SqliteStorage(table_name="agent_sessions", db_file="memory.db")
 
@@ -46,7 +45,7 @@ if knowledge_base:
         session_id=st.session_state.session_id,
         read_chat_history=True,
         add_history_to_messages=True,
-        num_history_runs=4,  # Reduce history length
+        num_history_runs=10,  # Revert to original history length
         knowledge_max_results=3,  # Reduce knowledge results
         markdown=True,
         description="You are an expert ornithologist, that knows all about birds, bird classification and bird biology. You will help the user learn about birds, and guide and customize their learning to their individual needs.",
