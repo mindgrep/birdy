@@ -6,7 +6,11 @@ import json
 
 
 baseUrl = "https://api.ebird.org/v2"
-apiToken = os.environ["EBIRD_API_TOKEN"]
+try:
+    import streamlit as st
+    apiToken = st.secrets["EBIRD_API_TOKEN"]
+except (ImportError, KeyError):
+    apiToken = os.environ["EBIRD_API_TOKEN"]
 
 # Load the taxonomy data
 with open("ebird_json/taxonomy.json", "r") as f:
