@@ -3,13 +3,14 @@ import os
 from agno.tools import tool
 from rich.pretty import pprint
 import json
+from streamlit.errors import StreamlitAPIException
 
 
 baseUrl = "https://api.ebird.org/v2"
 try:
     import streamlit as st
     apiToken = st.secrets["EBIRD_API_TOKEN"]
-except (ImportError, KeyError):
+except (ImportError, KeyError, StreamlitAPIException):
     apiToken = os.environ["EBIRD_API_TOKEN"]
 
 # Load the taxonomy data
